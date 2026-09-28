@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '../assets/jean-paul-saucedo.png';
+import { profile, type Locale } from '../data/portfolio';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isEs = locale === 'es';
+const projectsId = isEs ? 'proyectos' : 'projects';
+---
+
+<section class="hero shell" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <div class="availability"><span aria-hidden="true"></span>{isEs ? 'Disponible para nuevas oportunidades' : 'Open to new opportunities'}</div>
+    <p class="intro">{isEs ? 'Hola, soy Jean Paul' : 'Hi, I’m Jean Paul'}</p>
+    <h1 id="hero-title">{isEs ? 'Construyo software completo, desde la interfaz hasta el servidor.' : 'I build complete software, from interface to server.'}</h1>
+    <p class="hero-role">{profile.role[locale]} · 7+ {isEs ? 'años de experiencia' : 'years of experience'}</p>
+    <p class="hero-summary">
+      {isEs
+        ? 'Desarrollo aplicaciones de punta a punta: interfaces, APIs, bases de datos y despliegues en servidores Linux.'
+        : 'I develop applications end to end: interfaces, APIs, databases, and deployments on Linux servers.'}
+    </p>
+    <div class="hero-actions">
+      <a class="button" href={profile.cv} download>{isEs ? 'Descargar CV' : 'Download CV'}</a>
+      <a class="button button-secondary" href={`mailto:${profile.email}`}>{isEs ? 'Enviar email' : 'Send an email'}</a>
+    </div>
+    <div class="hero-links" aria-label={isEs ? 'Perfiles profesionales' : 'Professional profiles'}>
+      <a href={`#${projectsId}`}>{isEs ? 'Ver proyectos' : 'View projects'}</a>
+      <a href={profile.github} target="_blank" rel="noreferrer" translate="no">GitHub <span aria-hidden="true">↗</span></a>
+      <a href={profile.linkedin} target="_blank" rel="noreferrer" translate="no">LinkedIn <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-label={isEs ? 'Perfil de Jean Paul conectado con sus áreas de trabajo' : "Jean Paul's profile connected to his areas of work"}>
+    <div class="visual-grid" aria-hidden="true"></div>
+    <div class="orbit orbit-one" aria-hidden="true"></div>
+    <div class="orbit orbit-two" aria-hidden="true"></div>
+    <div class="portrait-frame">
+      <Image src={avatar} alt="Jean Paul Saucedo" width={400} height={400} loading="eager" fetchpriority="high" />
+    </div>
+    <span class="tech-node node-ui">React / UI</span>
+    <span class="tech-node node-api">Node.js / API</span>
+    <span class="tech-node node-db">PostgreSQL</span>
+    <span class="tech-node node-ops">Docker / Rocky Linux</span>
+  </div>
+</section>

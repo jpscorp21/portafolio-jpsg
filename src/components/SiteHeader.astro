@@ -1,0 +1,85 @@
+---
+import { profile, type Locale } from '../data/portfolio';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isEs = locale === 'es';
+const links = isEs
+  ? [
+      ['Proyectos', '#proyectos'],
+      ['Habilidades', '#habilidades'],
+      ['Experiencia', '#experiencia'],
+      ['Contacto', '#contacto'],
+    ]
+  : [
+      ['Projects', '#projects'],
+      ['Skills', '#skills'],
+      ['Experience', '#experience'],
+      ['Contact', '#contact'],
+    ];
+---
+
+<header class="site-header" data-header>
+  <div class="header-inner shell">
+    <a class="brand" href={isEs ? '/' : '/en/'} aria-label={`${profile.name} — ${isEs ? 'Inicio' : 'Home'}`}>
+      <span class="brand-mark" aria-hidden="true">JP</span>
+      <span class="brand-name">Jean Paul Saucedo</span>
+    </a>
+
+    <button class="icon-button menu-toggle" type="button" aria-label={isEs ? 'Abrir navegación' : 'Open navigation'} aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle data-open-label={isEs ? 'Abrir navegación' : 'Open navigation'} data-close-label={isEs ? 'Cerrar navegación' : 'Close navigation'}>
+      <span class="sr-only">{isEs ? 'Abrir navegación' : 'Open navigation'}</span>
+      <span class="menu-lines" aria-hidden="true"></span>
+    </button>
+
+    <nav id="primary-navigation" class="primary-nav" aria-label={isEs ? 'Navegación principal' : 'Primary navigation'} data-menu>
+      <div class="nav-links">
+        {links.map(([label, href]) => <a href={href}>{label}</a>)}
+      </div>
+      <div class="nav-actions">
+        <a class="locale-link" href={isEs ? '/en/' : '/'} lang={isEs ? 'en' : 'es'} aria-label={isEs ? 'View in English' : 'Ver en español'}>
+          {isEs ? 'EN' : 'ES'}
+        </a>
+        <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label={isEs ? 'Cambiar tema' : 'Change theme'}>
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg>
+        </button>
+        <a class="button button-small" href={profile.cv} download>
+          {isEs ? 'Descargar CV' : 'Download CV'}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"></path></svg>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const menuToggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const themeToggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+  const closeMenu = () => {
+    if (!menuToggle || !menu) return;
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', menuToggle.dataset.openLabel ?? 'Open navigation');
+    menu.removeAttribute('data-open');
+  };
+
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
+    menuToggle.setAttribute('aria-label', !isOpen ? menuToggle.dataset.closeLabel ?? 'Close navigation' : menuToggle.dataset.openLabel ?? 'Open navigation');
+    menu?.toggleAttribute('data-open', !isOpen);
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMenu();
+  });
+
+  themeToggle?.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = nextTheme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', nextTheme === 'light' ? '#fafaf9' : '#0a0a0a');
+    try { localStorage.setItem('portfolio-theme', nextTheme); } catch {}
+  });
+</script>

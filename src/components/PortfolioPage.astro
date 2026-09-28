@@ -1,0 +1,115 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from './SiteHeader.astro';
+import Hero from './Hero.astro';
+import ProjectCard from './ProjectCard.astro';
+import { experience, profile, skills, type Locale } from '../data/portfolio';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isEs = locale === 'es';
+const ids = isEs
+  ? { projects: 'proyectos', skills: 'habilidades', experience: 'experiencia', contact: 'contacto' }
+  : { projects: 'projects', skills: 'skills', experience: 'experience', contact: 'contact' };
+
+const projects = (await getCollection('projects', ({ data }) => data.featured))
+  .sort((a, b) => a.data.order - b.data.order);
+const title = isEs
+  ? 'Jean Paul Saucedo · Desarrollador FullStack Senior'
+  : 'Jean Paul Saucedo · Senior Full-Stack Developer';
+const description = isEs
+  ? 'Portafolio de Jean Paul Saucedo, Desarrollador FullStack Senior especializado en frontend, backend, bases de datos y despliegues Linux.'
+  : 'Portfolio of Jean Paul Saucedo, Senior Full-Stack Developer specializing in frontend, backend, databases, and Linux deployments.';
+---
+
+<BaseLayout lang={locale} title={title} description={description} path={isEs ? '/' : '/en/'}>
+  <SiteHeader locale={locale} />
+  <main id="main-content">
+    <Hero locale={locale} />
+
+    <section class="section shell" id={ids.projects} aria-labelledby="projects-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">{isEs ? 'Trabajo seleccionado' : 'Selected work'}</p>
+          <h2 id="projects-title">{isEs ? 'Proyectos que resuelven operaciones reales.' : 'Projects built around real operations.'}</h2>
+        </div>
+        <p>{isEs ? 'Aplicaciones web y móviles construidas para conectar procesos, datos y personas.' : 'Web and mobile applications built to connect processes, data, and people.'}</p>
+      </div>
+      <div class="projects-grid">
+        {projects.map(({ data }) => (
+          <ProjectCard {...data[locale]} image={data.image} imagePosition={data.imagePosition} imageFit={data.imageFit} technologies={data.technologies} order={data.order} demoUrl={data.demoUrl} repositoryUrl={data.repositoryUrl} locale={locale} />
+        ))}
+      </div>
+    </section>
+
+    <section class="section tech-section" id={ids.skills} aria-labelledby="skills-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">{isEs ? 'Capacidades técnicas' : 'Technical capabilities'}</p>
+            <h2 id="skills-title">{isEs ? 'Del producto a la infraestructura.' : 'From product to infrastructure.'}</h2>
+          </div>
+          <p>{isEs ? 'Elijo herramientas según el problema y acompaño el software durante todo su ciclo de vida.' : 'I choose tools according to the problem and support software throughout its lifecycle.'}</p>
+        </div>
+        <div class="skills-grid">
+          {skills.map((skill) => (
+            <article class="skill-group">
+              <h3>{skill.title[locale]}</h3>
+              <ul translate="no">{skill.items.map((item) => <li>{item}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id={ids.experience} aria-labelledby="experience-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">{isEs ? 'Trayectoria' : 'Career'}</p>
+          <h2 id="experience-title">{isEs ? 'Experiencia aplicada a negocio.' : 'Experience applied to business.'}</h2>
+        </div>
+        <p>{isEs ? 'Siete años construyendo y manteniendo productos para operaciones comerciales, administrativas y de campo.' : 'Seven years building and maintaining products for commercial, administrative, and field operations.'}</p>
+      </div>
+      <ol class="timeline">
+        {experience.map((item) => (
+          <li>
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-period">{item.period[locale]}</div>
+            <div class="timeline-content">
+              <h3>{item.role[locale]}</h3>
+              <p class="company">{item.company}</p>
+              <p>{item.description[locale]}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="data-note">{isEs ? 'La vigencia del puesto actual corresponde a la información registrada en el CV 2025 y está pendiente de actualización.' : 'The current role status reflects the information in the 2025 CV and is pending an update.'}</p>
+    </section>
+
+    <section class="section shell" id={ids.contact} aria-labelledby="contact-title">
+      <div class="contact-panel">
+        <div>
+          <p class="section-kicker">{isEs ? 'Conversemos' : "Let's talk"}</p>
+          <h2 id="contact-title">{isEs ? '¿Tu equipo necesita llevar una idea a producción?' : 'Does your team need to take an idea to production?'}</h2>
+          <p>{isEs ? 'Puedo aportar una mirada completa: producto, código, datos e infraestructura.' : 'I can contribute an end-to-end perspective across product, code, data, and infrastructure.'}</p>
+        </div>
+        <div class="contact-actions">
+          <a class="button button-light" href={`mailto:${profile.email}`}>{isEs ? 'Enviar email' : 'Send an email'}</a>
+          <a class="button button-ghost-light" href={profile.whatsapp} target="_blank" rel="noreferrer">WhatsApp ↗</a>
+        </div>
+        <div class="contact-meta">
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <span>{profile.location}</span>
+          <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell">
+    <p>© {new Date().getFullYear()} Jean Paul Saucedo</p>
+    <p>{isEs ? 'Diseñado y desarrollado en Paraguay.' : 'Designed and developed in Paraguay.'}</p>
+  </footer>
+</BaseLayout>

@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  detail: string;
+  image: string;
+  imagePosition?: string;
+  imageFit?: 'cover' | 'contain';
+  technologies: string[];
+  order: number;
+  demoUrl?: string;
+  repositoryUrl?: string;
+  locale: 'es' | 'en';
+}
+
+const { title, description, detail, image, imagePosition = 'center', imageFit = 'cover', technologies, order, demoUrl, repositoryUrl, locale } = Astro.props;
+---
+
+<article class:list={['project-card', { 'project-card-featured': order === 1 }]}>
+  <div class="project-image">
+    <img src={image} alt={`${locale === 'es' ? 'Captura del proyecto' : 'Project preview'}: ${title}`} width="800" height="500" loading={order === 1 ? 'eager' : 'lazy'} style={`object-position: ${imagePosition}; object-fit: ${imageFit};`} />
+    <span class="project-index" aria-hidden="true">{String(order).padStart(2, '0')}</span>
+  </div>
+  <div class="project-content">
+    <h3>{title}</h3>
+    <p>{description}</p>
+    <p class="project-detail">{detail}</p>
+    <ul class="tag-list" aria-label={locale === 'es' ? 'Tecnologías' : 'Technologies'} translate="no">
+      {technologies.map((technology) => <li>{technology}</li>)}
+    </ul>
+    {(demoUrl || repositoryUrl) && (
+      <div class="project-links">
+        {demoUrl && <a href={demoUrl} target="_blank" rel="noreferrer">{locale === 'es' ? 'Ver demo' : 'View demo'} ↗</a>}
+        {repositoryUrl && <a href={repositoryUrl} target="_blank" rel="noreferrer">GitHub ↗</a>}
+      </div>
+    )}
+  </div>
+</article>
