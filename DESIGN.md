@@ -4,9 +4,9 @@ This file is the visual source of truth for the portfolio. Read it before changi
 
 ## Direction
 
-The portfolio presents Jean Paul Saucedo as a senior full-stack developer who works across product interfaces, APIs, data, and infrastructure. The visual language combines a near-black technical workspace with a vivid orange signal color. It should feel precise, experienced, and human.
+The portfolio presents Jean Paul Saucedo as a Senior Software Engineer focused on production-critical systems, backend architecture, integrations, and technical problem solving. The visual language combines a near-black technical workspace with a vivid orange signal color. It should feel precise, experienced, and human.
 
-The memorable device is the hero portrait surrounded by four connected areas of work: UI, APIs, databases, and Linux deployment. Keep the rest of the interface restrained so this idea remains clear.
+The memorable device is an abstract isometric system in the Hero: connected layers, circuit traces, and an orange core. The portrait appears only in the navbar. Keep the rest of the interface restrained so this idea remains clear.
 
 References:
 
@@ -36,7 +36,7 @@ Dark is the default. Orange is a signal, not a background texture: reserve it fo
 
 - Display: Space Grotesk Variable, locally served. Use for headings, navigation, buttons, and short labels.
 - Body: Source Sans 3 Variable, locally served. Use for paragraphs and supporting information.
-- H1: `clamp(2.7rem, 5.8vw, 4.5rem)`, line-height 1.02, weight 700, maximum width approximately 13 characters.
+- H1: `clamp(2.7rem, 5.8vw, 4.5rem)`, line-height 1.02, weight 700, maximum width approximately 16 characters.
 - Section heading: `clamp(2.25rem, 4.8vw, 3.75rem)`.
 - Body: 17 px by default, 1.6 line-height. Keep paragraphs below 80 characters per line.
 - Use sentence case. Do not add all-caps labels or selectively color a word inside a headline.
@@ -47,21 +47,20 @@ Dark is the default. Orange is a signal, not a background texture: reserve it fo
 - Base spacing unit: 8 px.
 - Page gutters: 16 px on small screens; the content shell controls larger screens.
 - Section spacing: 72-112 px, fluid with viewport width.
-- Component radius: 12-20 px. Portrait frame may use an asymmetric radius.
+- Component radius: 12-20 px. The navbar portrait uses a circular crop.
 - Header height: 76 px and sticky.
 
 Desktop hero:
 
 ```text
 ┌────────────────────────────────────────────────────────────┐
-│ status                                                     │
-│ headline + proposition       portrait + capability nodes   │
-│ primary actions              UI / API / DB / Linux          │
-│ project + social links                                     │
+│ headline + proposition       abstract system layers        │
+│ CV + WhatsApp                connected circuits                   │
+│ project + email + social links                                     │
 └────────────────────────────────────────────────────────────┘
 ```
 
-Stack hero content before the portrait below 992 px. All project and skill grids become one column on small screens.
+Stack hero content before the system illustration below 992 px. All project and skill grids become one column on small screens.
 
 ## Components
 
@@ -76,7 +75,10 @@ Stack hero content before the portrait below 992 px. All project and skill grids
 ## Images
 
 - `src/assets/jean-paul-saucedo.png` is the source portrait. Preserve identity, crop, and natural proportions. Do not apply face alteration or generative edits.
-- The hero portrait is at most 320 px wide and uses an orange geometric background plus restrained capability labels.
+- The navbar portrait is 44 × 44 px, with an 88 × 88 px optimized source and a circular crop. Its alt is empty because the brand link already names the person.
+- The Hero illustration is decorative, static, theme-aware inline SVG; no simulated operational status, technology badges, or metrics. It scales with its column and stacks beneath the copy on mobile.
+- The Hero title is “Senior Software Engineer” in both languages, followed by localized specialization and concise production/modernization experience. No availability badge.
+- Hero actions: primary CV download, secondary WhatsApp; projects, email, GitHub, and LinkedIn as text links.
 - Project screenshots live in `public/images/projects/`. Prefer real product images. Use descriptive alternate text and preserve the important area with `object-position`.
 - Reference images live in `docs/references/` and must never be served as portfolio content.
 - Social preview is 1200 × 630 px and uses the same color and type hierarchy.

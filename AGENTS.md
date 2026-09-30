@@ -8,6 +8,12 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Deployment
+
+The portfolio uses Cloudflare for deployment and hosting.
+
+Production site: [portafolio-jpsg.jpscorp21.workers.dev](https://portafolio-jpsg.jpscorp21.workers.dev/).
+
 ## Design skills
 
 Before working on the portfolio UI, discover the relevant skills in the session's available-skills list and read their `SKILL.md` instructions.

@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import avatar from '../assets/jean-paul-saucedo.png';
 import { profile, type Locale } from '../data/portfolio';
 
 interface Props { locale: Locale }
@@ -22,7 +24,7 @@ const links = isEs
 <header class="site-header" data-header>
   <div class="header-inner shell">
     <a class="brand" href={isEs ? '/' : '/en/'} aria-label={`${profile.name} — ${isEs ? 'Inicio' : 'Home'}`}>
-      <span class="brand-mark" aria-hidden="true">JP</span>
+      <Image class="brand-avatar" src={avatar} alt="" width={88} height={88} loading="eager" />
       <span class="brand-name">Jean Paul Saucedo</span>
     </a>
 

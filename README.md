@@ -2,6 +2,10 @@
 
 Bilingual portfolio for a Senior Full-Stack Developer, built as a static Astro site.
 
+## Live site
+
+The portfolio is deployed on Cloudflare: [portafolio-jpsg.jpscorp21.workers.dev](https://portafolio-jpsg.jpscorp21.workers.dev/).
+
 ## Development
 
 ```sh

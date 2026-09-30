@@ -1,6 +1,4 @@
 ---
-import { Image } from 'astro:assets';
-import avatar from '../assets/jean-paul-saucedo.png';
 import { profile, type Locale } from '../data/portfolio';
 
 interface Props { locale: Locale }
@@ -11,36 +9,69 @@ const projectsId = isEs ? 'proyectos' : 'projects';
 
 <section class="hero shell" aria-labelledby="hero-title">
   <div class="hero-copy">
-    <div class="availability"><span aria-hidden="true"></span>{isEs ? 'Disponible para nuevas oportunidades' : 'Open to new opportunities'}</div>
     <p class="intro">{isEs ? 'Hola, soy Jean Paul' : 'Hi, I’m Jean Paul'}</p>
-    <h1 id="hero-title">{isEs ? 'Construyo software completo, desde la interfaz hasta el servidor.' : 'I build complete software, from interface to server.'}</h1>
-    <p class="hero-role">{profile.role[locale]} · 7+ {isEs ? 'años de experiencia' : 'years of experience'}</p>
+    <h1 id="hero-title" lang="en" translate="no">Senior Software Engineer</h1>
+    <p class="hero-role">{isEs ? 'Sistemas críticos. Backend e integraciones.' : 'Critical systems. Backend & integrations.'}</p>
     <p class="hero-summary">
       {isEs
-        ? 'Desarrollo aplicaciones de punta a punta: interfaces, APIs, bases de datos y despliegues en servidores Linux.'
-        : 'I develop applications end to end: interfaces, APIs, databases, and deployments on Linux servers.'}
+        ? 'Diseño e integro sistemas que sostienen la operación de un negocio. Resuelvo problemas complejos en producción y modernizo software, desde la arquitectura hasta el despliegue.'
+        : 'I design and integrate systems that keep businesses running. I solve complex production problems and modernize software, from architecture to deployment.'}
     </p>
+    <p class="hero-context">{isEs ? 'Experiencia en POS, KDS y ERP.' : 'Experience with POS, KDS, and ERP systems.'}</p>
     <div class="hero-actions">
       <a class="button" href={profile.cv} download>{isEs ? 'Descargar CV' : 'Download CV'}</a>
-      <a class="button button-secondary" href={`mailto:${profile.email}`}>{isEs ? 'Enviar email' : 'Send an email'}</a>
+      <a class="button button-secondary" href={profile.whatsapp} target="_blank" rel="noreferrer">WhatsApp <span aria-hidden="true">↗</span></a>
     </div>
-    <div class="hero-links" aria-label={isEs ? 'Perfiles profesionales' : 'Professional profiles'}>
+    <div class="hero-links">
       <a href={`#${projectsId}`}>{isEs ? 'Ver proyectos' : 'View projects'}</a>
+      <a href={`mailto:${profile.email}`}>{isEs ? 'Enviar email' : 'Email me'}</a>
       <a href={profile.github} target="_blank" rel="noreferrer" translate="no">GitHub <span aria-hidden="true">↗</span></a>
       <a href={profile.linkedin} target="_blank" rel="noreferrer" translate="no">LinkedIn <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 
-  <div class="hero-visual" aria-label={isEs ? 'Perfil de Jean Paul conectado con sus áreas de trabajo' : "Jean Paul's profile connected to his areas of work"}>
-    <div class="visual-grid" aria-hidden="true"></div>
-    <div class="orbit orbit-one" aria-hidden="true"></div>
-    <div class="orbit orbit-two" aria-hidden="true"></div>
-    <div class="portrait-frame">
-      <Image src={avatar} alt="Jean Paul Saucedo" width={400} height={400} loading="eager" fetchpriority="high" />
-    </div>
-    <span class="tech-node node-ui">React / UI</span>
-    <span class="tech-node node-api">Node.js / API</span>
-    <span class="tech-node node-db">PostgreSQL</span>
-    <span class="tech-node node-ops">Docker / Rocky Linux</span>
+  <div class="hero-visual" aria-hidden="true">
+    <svg class="system-art" viewBox="0 0 480 520" fill="none">
+      <defs>
+        <pattern id="system-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+          <path d="M32 0H0V32" class="art-grid" />
+        </pattern>
+      </defs>
+      <rect x="16" y="24" width="448" height="472" fill="url(#system-grid)" />
+      <g class="art-traces">
+        <path d="M240 36V90M240 430V486M28 264H80L128 292M352 228L400 200H460M70 112H110L160 142M320 382L370 410H444" />
+        <circle cx="240" cy="36" r="4" /><circle cx="240" cy="486" r="4" />
+        <circle cx="28" cy="264" r="4" /><circle cx="460" cy="200" r="4" />
+        <circle cx="70" cy="112" r="4" /><circle cx="444" cy="410" r="4" />
+      </g>
+      <g class="art-layer art-layer-bottom">
+        <path d="M64 326L240 224L416 326V350L240 452L64 350Z" />
+        <path d="M64 326L240 428L416 326M240 428V452" />
+      </g>
+      <g class="art-connectors">
+        <path d="M112 250V326M368 250V326M240 324V400M240 148V224" />
+      </g>
+      <g class="art-layer">
+        <path d="M64 226L240 124L416 226V250L240 352L64 250Z" />
+        <path d="M64 226L240 328L416 226M240 328V352" />
+      </g>
+      <g class="art-circuit">
+        <path d="M112 226L192 272L240 244L288 272L368 226M160 198L208 226M272 226L320 198M240 170V198" />
+        <circle cx="112" cy="226" r="4" /><circle cx="368" cy="226" r="4" />
+        <circle cx="160" cy="198" r="4" /><circle cx="320" cy="198" r="4" />
+      </g>
+      <g class="art-core">
+        <path d="M176 172L240 135L304 172V210L240 247L176 210Z" />
+        <path d="M176 172L240 209L304 172M240 209V247" />
+        <path d="M211 171L228 161M211 171L228 181M252 161L269 171L252 181" />
+      </g>
+      <path class="art-connectors" d="M112 150V194M368 150V194" />
+      <g class="art-layer art-layer-top">
+        <path d="M64 126L240 24L416 126L240 228Z" />
+        <path d="M96 126L240 43L384 126L240 209Z" />
+        <path d="M128 126L240 61L352 126L240 191Z" />
+      </g>
+    </svg>
+    <p class="visual-caption">{isEs ? 'Arquitectura conectada con la operación.' : 'Architecture connected to operations.'}</p>
   </div>
 </section>
